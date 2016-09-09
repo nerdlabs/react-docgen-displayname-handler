@@ -1,0 +1,10 @@
+/source
+/flow-typed
+/tests
+.babelrc
+.editorconfig
+.eslintignore
+.eslintrc
+.flowconfig
+.npmignore
+.travis.yml
