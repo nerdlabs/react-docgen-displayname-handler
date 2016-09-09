@@ -8,3 +8,4 @@
 .flowconfig
 .npmignore
 .travis.yml
+wallaby.js
