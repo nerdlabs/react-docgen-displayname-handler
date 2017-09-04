@@ -43,7 +43,7 @@
     "react-docgen": "2.x || ^3.0.0-beta"
   },
   "dependencies": {
-    "recast": "0.11.12"
+    "recast": "0.12.6"
   },
   "devDependencies": {
     "ava": "0.16.0",
@@ -57,7 +57,7 @@
     "babel-register": "^6.14.0",
     "eslint": "3.4.0",
     "flow-bin": "0.32.0",
-    "react-docgen": "2.10.0",
+    "react-docgen": "3.0.0-beta6",
     "rimraf": "2.5.4"
   }
 }
