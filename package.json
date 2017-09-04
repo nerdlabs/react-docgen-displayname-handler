@@ -1,6 +1,6 @@
 {
   "name": "react-docgen-displayname-handler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A handler for react-docgen that tries to infer the displayName of a component",
   "license": "MIT",
   "main": "distribution/index.js",
