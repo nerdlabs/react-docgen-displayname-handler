@@ -41,10 +41,8 @@
     "url": "git+https://github.com/nerdlabs/react-docgen-displayname-handler.git"
   },
   "peerDependencies": {
-    "react-docgen": "2.x || ^3.0.0-beta"
-  },
-  "dependencies": {
-    "recast": "0.12.6"
+    "react-docgen": "^2.17.0 || ^3.0.0-beta",
+    "recast": "0.12.6 || 0.13.0"
   },
   "devDependencies": {
     "ava": "0.22.0",
@@ -58,7 +56,8 @@
     "babel-register": "^6.14.0",
     "eslint": "3.4.0",
     "flow-bin": "0.54.0",
-    "react-docgen": "3.0.0-beta6",
+    "react-docgen": "3.0.0-beta11",
+    "recast": "0.13.0",
     "rimraf": "2.6.1",
     "test-all-versions": "3.3.2"
   }
