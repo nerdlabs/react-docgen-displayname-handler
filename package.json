@@ -3,6 +3,23 @@
   "version": "1.0.1",
   "description": "A handler for react-docgen that tries to infer the displayName of a component",
   "license": "MIT",
+  "author": "nerdlabs <nerds@nerdlabs.it>",
+  "keywords": [
+    "react",
+    "documentation-generation",
+    "react-docgen"
+  ],
+  "homepage": "https://github.com/nerdlabs/react-docgen-displayname-handler#readme",
+  "bugs": {
+    "url": "https://github.com/nerdlabs/react-docgen-displayname-handler/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nerdlabs/react-docgen-displayname-handler.git"
+  },
+  "engines": {
+    "node": ">=4"
+  },
   "files": [
     "distribution"
   ],
@@ -28,20 +45,6 @@
       "babel-register"
     ],
     "babel": "inherit"
-  },
-  "author": "nerdlabs <nerds@nerdlabs.it>",
-  "keywords": [
-    "react",
-    "documentation-generation",
-    "react-docgen"
-  ],
-  "homepage": "https://github.com/nerdlabs/react-docgen-displayname-handler#readme",
-  "bugs": {
-    "url": "https://github.com/nerdlabs/react-docgen-displayname-handler/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nerdlabs/react-docgen-displayname-handler.git"
   },
   "babel": {
     "presets": [
