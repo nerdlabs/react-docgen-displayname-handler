@@ -3,17 +3,38 @@
 import path from 'path';
 import recast from 'recast';
 import { utils } from 'react-docgen';
-const { getMemberValuePath, getNameOrValue } = utils;
+const { getMemberValuePath, getNameOrValue, isExportsOrModuleAssignment } = utils;
 
 const {types: {namedTypes: types}} = recast;
 
 const DEFAULT_NAME = 'UnknownComponent';
 
+function getNameFromPath(path: NodePath): ?string {
+  var node = path.node
+  switch (node.type) {
+    case types.Identifier.name:
+    case types.Literal.name:
+      return getNameOrValue(path)
+    case types.MemberExpression.name:
+      return utils
+        .getMembers(path)
+        .reduce(
+          (name, { path, computed }) =>
+            computed && getNameFromPath(path)
+              ? name
+              : `${name}.${getNameFromPath(path) || ''}`,
+          getNameFromPath(path.get('object'))
+        )
+    default:
+      return null
+  }
+}
+
 function getStaticDisplayName(path: NodePath): ?string {
   let displayName = null;
   const staticMember: ?NodePath = getMemberValuePath(path, 'displayName');
   if (staticMember && types.Literal.check(staticMember.node)) {
-    displayName = getNameOrValue(staticMember);
+    displayName = getNameFromPath(staticMember);
   }
 
   return displayName || null;
@@ -27,7 +48,7 @@ function getNodeIdentifier(path: NodePath): ?string {
     types.ClassExpression.check(path.node) ||
     types.ClassDeclaration.check(path.node)
   ) {
-    displayName = getNameOrValue(path.get('id'));
+    displayName = getNameFromPath(path.get('id'));
   }
 
   return displayName || null;
@@ -39,7 +60,14 @@ function getVariableIdentifier(path: NodePath): ?string {
 
   while (searchPath !== null) {
     if (types.VariableDeclarator.check(searchPath.node)) {
-      displayName = getNameOrValue(searchPath.get('id'));
+      displayName = getNameFromPath(searchPath.get('id'));
+      break;
+    }
+    if (
+      types.AssignmentExpression.check(searchPath.node) &&
+      !isExportsOrModuleAssignment(searchPath)
+    ) {
+      displayName = getNameFromPath(searchPath.get('left'));
       break;
     }
     searchPath = searchPath.parentPath;

@@ -107,6 +107,23 @@ test('Infer displayName from variable declaration name', (t) => {
     'should set the displayName property on documentation.');
 });
 
+test('Infer displayName from assignment', t => {
+  const definition = findComponent(`
+    var Foo = {};
+    Foo.Bar = () => <div />
+  `);
+  displayNameHandler(documentation, definition);
+
+  const actual = documentation.get('displayName');
+  const expected = 'Foo.Bar';
+
+  t.is(
+    actual,
+    expected,
+    'should set the displayName property on documentation.'
+  );
+})
+
 test('Infer displayName from file name', (t) => {
   const definition = findComponent(`
     module.exports = () => <div />;
