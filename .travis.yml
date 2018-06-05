@@ -1,8 +1,21 @@
-sudo: required
 language: node_js
+
 node_js:
   - 4
-  - 5
-  - stable
-script:
-  - npm run test
+  - 6
+  - 8
+  - 10
+
+script: npm run test
+
+jobs:
+  include:
+    - stage: release
+      node_js: lts/*
+      script: npm run build
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script: npx semantic-release
+        on:
+          branch: master

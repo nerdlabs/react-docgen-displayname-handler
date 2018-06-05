@@ -1,17 +1,37 @@
 {
   "name": "react-docgen-displayname-handler",
-  "version": "1.0.1",
+  "version": "0.0.0-development",
   "description": "A handler for react-docgen that tries to infer the displayName of a component",
   "license": "MIT",
+  "author": "nerdlabs <nerds@nerdlabs.it>",
+  "keywords": [
+    "react",
+    "documentation-generation",
+    "react-docgen"
+  ],
+  "homepage": "https://github.com/nerdlabs/react-docgen-displayname-handler#readme",
+  "bugs": {
+    "url": "https://github.com/nerdlabs/react-docgen-displayname-handler/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nerdlabs/react-docgen-displayname-handler.git"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "files": [
+    "distribution"
+  ],
   "main": "distribution/index.js",
   "scripts": {
     "flow": "flow",
-    "lint": "eslint src/",
-    "prebuild": "npm test",
+    "lint": "eslint src/ test/",
     "build": "rimraf distribution/ && babel source/ --out-dir distribution/ --ignore **/*.spec.js",
-    "prepublish": "npm run build",
-    "pretest": "npm run lint && npm run flow",
-    "test": "ava"
+    "pretest:unit": "npm run flow",
+    "test:unit": "ava",
+    "test": "npm run lint && npm run test:unit && tav",
+    "semantic-release": "semantic-release"
   },
   "ava": {
     "files": [
@@ -25,39 +45,63 @@
     ],
     "babel": "inherit"
   },
-  "author": "nerdlabs <nerds@nerdlabs.it>",
-  "keywords": [
-    "react",
-    "documentation-generation",
-    "react-docgen"
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "4"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "syntax-flow",
+      "transform-flow-strip-types",
+      "transform-runtime"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended"
+    ],
+    "parser": "babel-eslint",
+    "env": {
+      "node": true
+    },
+    "globals": {
+      "ASTNode": true,
+      "Documentation": true,
+      "FlowTypeDescriptor": true,
+      "NodePath": true,
+      "PropDescriptor": true,
+      "PropTypeDescriptor": true
+    }
+  },
+  "eslintIgnore": [
+    "distribution/"
   ],
-  "homepage": "https://github.com/nerdlabs/react-docgen-displayname-handler#readme",
-  "bugs": {
-    "url": "https://github.com/nerdlabs/react-docgen-displayname-handler/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nerdlabs/react-docgen-displayname-handler.git"
-  },
   "peerDependencies": {
-    "react-docgen": "2.x || ^3.0.0-beta"
-  },
-  "dependencies": {
-    "recast": "0.12.6"
+    "react-docgen": "^2.17.0 || ^3.0.0-beta",
+    "recast": "0.12.6 || 0.13.0"
   },
   "devDependencies": {
-    "ava": "0.22.0",
+    "ava": "0.25.0",
     "babel-cli": "6.26.0",
-    "babel-eslint": "6.1.2",
+    "babel-eslint": "8.2.3",
     "babel-plugin-syntax-flow": "6.18.0",
     "babel-plugin-transform-flow-strip-types": "6.22.0",
     "babel-plugin-transform-runtime": "6.23.0",
-    "babel-preset-es2015": "6.24.1",
-    "babel-preset-stage-1": "6.24.1",
-    "babel-register": "^6.14.0",
-    "eslint": "3.4.0",
-    "flow-bin": "0.54.0",
-    "react-docgen": "3.0.0-beta6",
-    "rimraf": "2.6.1"
+    "babel-preset-env": "1.7.0",
+    "babel-register": "6.14.0",
+    "babel-runtime": "6.26.0",
+    "eslint": "4.19.1",
+    "flow-bin": "0.73.0",
+    "react-docgen": "3.0.0-beta12",
+    "recast": "0.13.0",
+    "rimraf": "2.6.2",
+    "semantic-release": "15.5.0",
+    "test-all-versions": "3.3.3"
   }
 }
