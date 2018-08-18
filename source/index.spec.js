@@ -1,174 +1,160 @@
 import test from 'ava';
-import recast from 'recast';
-import Documentation from 'react-docgen/dist/Documentation';
-import { resolver } from 'react-docgen';
-import { parse } from '../tests/utils';
+import * as docgen from 'react-docgen';
 import displayNameHandler, { createDisplayNameHandler } from './index';
-const { findAllComponentDefinitions } = resolver;
 
-let documentation = null;
+const { resolver: { findAllComponentDefinitions } } = docgen;
 
-function findComponent(source) {
-  const code = `var React = require('react');\n${source}`;
-  return findAllComponentDefinitions(parse(code), recast)[0];
+function parse(source, handler) {
+  const code = `
+    var React = require('react');
+    ${source}
+  `;
+  return docgen.parse(code, findAllComponentDefinitions, [handler])[0];
 }
 
-test.beforeEach(() => {
-  documentation = new Documentation();
-});
-
 test('Explicitly set displayName as member of React.createClass', (t) => {
-  const definition = findComponent(`
+  const doc = parse(`
     var MyComponent = React.createClass({ displayName: 'foo' });
-  `);
-  displayNameHandler(documentation, definition);
+  `, displayNameHandler);
 
-  const actual = documentation.get('displayName');
-  const expected = 'foo';
-
-  t.is(actual, expected,
-    'should set the displayName property on documentation.');
+  t.deepEqual(
+    doc,
+    { displayName: 'foo' },
+    'should set the displayName property on documentation.'
+  );
 });
 
 test('Explicitly set displayName as static class member', (t) => {
-  const definition = findComponent(`
+  const doc = parse(`
     class MyComponent { static displayName = 'foo'; render() {} }
-  `);
-  displayNameHandler(documentation, definition);
+  `, displayNameHandler);
 
-  const actual = documentation.get('displayName');
-  const expected = 'foo';
-
-  t.is(actual, expected,
-    'should set the displayName property on documentation.');
+  t.deepEqual(
+    doc,
+    { displayName: 'foo' },
+    'should set the displayName property on documentation.'
+  );
 });
 
 test('Infer displayName from function declaration/expression name', (t) => {
   {
-    const definition = findComponent(`
+    const doc = parse(`
       function MyComponent() { return <div />; }
-    `);
-    displayNameHandler(documentation, definition);
+    `, displayNameHandler);
 
-    const actual = documentation.get('displayName');
-    const expected = 'MyComponent';
-
-    t.is(actual, expected, 'should use function name as displayName');
+    t.deepEqual(
+      doc,
+      { displayName: 'MyComponent' },
+      'should use function name as displayName'
+    );
   }
   {
-    const definition = findComponent(`
+    const doc = parse(`
       var x = function MyComponent() { return <div />; }
-    `);
-    displayNameHandler(documentation, definition);
+    `, displayNameHandler);
 
-    const actual = documentation.get('displayName');
-    const expected = 'MyComponent';
-
-    t.is(actual, expected,
-      'should also take function name from function expressions');
+    t.deepEqual(
+      doc,
+      { displayName: 'MyComponent' },
+      'should also take function name from function expressions'
+    );
   }
 });
 
 test('Infer displayName from class declaration/expression name', (t) => {
   {
-    const definition = findComponent(`
+    const doc = parse(`
       class MyComponent { render() {} }
-    `);
-    displayNameHandler(documentation, definition);
+    `, displayNameHandler);
 
-    const actual = documentation.get('displayName');
-    const expected = 'MyComponent';
-
-    t.is(actual, expected, 'should use class name as displayName');
+    t.deepEqual(
+      doc,
+      { displayName: 'MyComponent' },
+      'should use class name as displayName'
+    );
   }
   {
-    const definition = findComponent(`
+    const doc = parse(`
       var x = class MyComponent { render() {} }
-    `);
-    displayNameHandler(documentation, definition);
+    `, displayNameHandler);
 
-    const actual = documentation.get('displayName');
-    const expected = 'MyComponent';
-
-    t.is(actual, expected, 'should also use class name from ClassExpression');
+    t.deepEqual(
+      doc,
+      { displayName: 'MyComponent' },
+      'should also use class name from ClassExpression'
+    );
   }
 });
 
 test('Infer displayName from variable declaration name', (t) => {
-  const definition = findComponent(`
+  const doc = parse(`
     var Foo = React.createClass({});
-  `);
-  displayNameHandler(documentation, definition);
+  `, displayNameHandler);
 
-  const actual = documentation.get('displayName');
-  const expected = 'Foo';
-
-  t.is(actual, expected,
-    'should set the displayName property on documentation.');
+  t.deepEqual(
+    doc,
+    { displayName: 'Foo' },
+    'should set the displayName property on documentation.'
+  );
 });
 
 test('Infer displayName from assignment', t => {
-  const definition = findComponent(`
+  const doc = parse(`
     var Foo = {};
     Foo.Bar = () => <div />
-  `);
-  displayNameHandler(documentation, definition);
+  `, displayNameHandler);
 
-  const actual = documentation.get('displayName');
-  const expected = 'Foo.Bar';
-
-  t.is(
-    actual,
-    expected,
+  t.deepEqual(
+    doc,
+    { displayName: 'Foo.Bar' },
     'should set the displayName property on documentation.'
   );
 })
 
 test('Infer displayName from file name', (t) => {
-  const definition = findComponent(`
+  const doc = parse(`
     module.exports = () => <div />;
-  `);
-  createDisplayNameHandler('foo/bar/MyComponent.js')(documentation, definition);
+  `, createDisplayNameHandler('foo/bar/MyComponent.js'));
 
-  const actual = documentation.get('displayName');
-  const expected = 'MyComponent';
-
-  t.is(actual, expected, 'should use the file name as displayName');
+  t.deepEqual(
+    doc,
+    { displayName: 'MyComponent' },
+    'should use the file name as displayName'
+  );
 });
 
 test('Infer displayName from file path', (t) => {
   {
-    const definition = findComponent(`
+    const doc = parse(`
       module.exports = () => <div />;
-    `);
-    createDisplayNameHandler('foo/MyComponent/index.js')(documentation, definition);
+    `, createDisplayNameHandler('foo/MyComponent/index.js'));
 
-    const actual = documentation.get('displayName');
-    const expected = 'MyComponent';
-
-    t.is(actual, expected, 'should use the file path as displayName');
+    t.deepEqual(
+      doc,
+      { displayName: 'MyComponent' },
+      'should use the file path as displayName'
+    );
   }
   {
-    const definition = findComponent(`
+    const doc = parse(`
       module.exports = () => <div />;
-    `);
-    createDisplayNameHandler('foo/my-component/index.js')(documentation, definition);
+    `, createDisplayNameHandler('foo/my-component/index.js'));
 
-    const actual = documentation.get('displayName');
-    const expected = 'MyComponent';
-
-    t.is(actual, expected, 'should replace hyphens with uppercase characters');
+    t.deepEqual(
+      doc,
+      { displayName: 'MyComponent' },
+      'should replace hyphens with uppercase characters'
+    );
   }
 });
 
 test('Use default if displayName cannot be inferred', (t) => {
-  const definition = findComponent(`
+  const doc = parse(`
     module.exports = () => <div />;
-  `);
-  displayNameHandler(documentation, definition);
+  `, displayNameHandler);
 
-  const actual = documentation.get('displayName');
-  const expected = 'UnknownComponent';
-
-  t.is(actual, expected, 'should use the default name');
+  t.deepEqual(
+    doc,
+    { displayName: 'UnknownComponent' }, 'should use the default name'
+  );
 });
