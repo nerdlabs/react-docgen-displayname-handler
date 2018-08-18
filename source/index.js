@@ -1,11 +1,14 @@
 /* @flow */
 
 import path from 'path';
-import recast from 'recast';
 import { utils } from 'react-docgen';
-const { getMemberValuePath, getNameOrValue, isExportsOrModuleAssignment } = utils;
+import { namedTypes as types } from 'ast-types';
 
-const {types: {namedTypes: types}} = recast;
+const {
+  getMemberValuePath,
+  getNameOrValue,
+  isExportsOrModuleAssignment
+} = utils;
 
 const DEFAULT_NAME = 'UnknownComponent';
 
