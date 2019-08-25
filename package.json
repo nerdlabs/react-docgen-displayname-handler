@@ -113,6 +113,6 @@
     "test-all-versions": "3.3.3"
   },
   "dependencies": {
-    "ast-types": "0.11.5"
+    "ast-types": "0.13.2"
   }
 }
