@@ -7,17 +7,17 @@ import { namedTypes as types } from 'ast-types';
 const {
   getMemberValuePath,
   getNameOrValue,
-  isExportsOrModuleAssignment
+  isExportsOrModuleAssignment,
 } = utils;
 
 const DEFAULT_NAME = 'UnknownComponent';
 
 function getNameFromPath(path: NodePath): ?string {
-  var node = path.node
+  var node = path.node;
   switch (node.type) {
     case types.Identifier.name:
     case types.Literal.name:
-      return getNameOrValue(path)
+      return getNameOrValue(path);
     case types.MemberExpression.name:
       return utils
         .getMembers(path)
@@ -27,9 +27,9 @@ function getNameFromPath(path: NodePath): ?string {
               ? name
               : `${name}.${getNameFromPath(path) || ''}`,
           getNameFromPath(path.get('object'))
-        )
+        );
     default:
-      return null
+      return null;
   }
 }
 
@@ -85,13 +85,14 @@ function getNameFromFilePath(filePath: string = ''): ?string {
   const filename = path.basename(filePath, path.extname(filePath));
   if (filename === 'index') {
     const parts = path.dirname(filePath).split(path.sep);
-    displayName = parts[parts.length -1];
+    displayName = parts[parts.length - 1];
   } else {
     displayName = filename;
   }
 
   return displayName
-    .charAt(0).toUpperCase()
+    .charAt(0)
+    .toUpperCase()
     .concat(displayName.slice(1))
     .replace(/-([a-z])/, (_, match) => match.toUpperCase());
 }
@@ -114,7 +115,7 @@ export function createDisplayNameHandler(
     }
 
     documentation.set('displayName', displayName || DEFAULT_NAME);
-  }
+  };
 }
 
 export default createDisplayNameHandler('');

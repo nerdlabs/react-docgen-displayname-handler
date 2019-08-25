@@ -2,7 +2,9 @@ import test from 'ava';
 import * as docgen from 'react-docgen';
 import displayNameHandler, { createDisplayNameHandler } from './index';
 
-const { resolver: { findAllComponentDefinitions } } = docgen;
+const {
+  resolver: { findAllComponentDefinitions },
+} = docgen;
 
 function parse(source, handler) {
   const code = `
@@ -12,10 +14,13 @@ function parse(source, handler) {
   return docgen.parse(code, findAllComponentDefinitions, [handler])[0];
 }
 
-test('Explicitly set displayName as member of React.createClass', (t) => {
-  const doc = parse(`
+test('Explicitly set displayName as member of React.createClass', t => {
+  const doc = parse(
+    `
     var MyComponent = React.createClass({ displayName: 'foo' });
-  `, displayNameHandler);
+  `,
+    displayNameHandler
+  );
 
   t.deepEqual(
     doc,
@@ -24,10 +29,13 @@ test('Explicitly set displayName as member of React.createClass', (t) => {
   );
 });
 
-test('Explicitly set displayName as static class member', (t) => {
-  const doc = parse(`
+test('Explicitly set displayName as static class member', t => {
+  const doc = parse(
+    `
     class MyComponent { static displayName = 'foo'; render() {} }
-  `, displayNameHandler);
+  `,
+    displayNameHandler
+  );
 
   t.deepEqual(
     doc,
@@ -36,11 +44,14 @@ test('Explicitly set displayName as static class member', (t) => {
   );
 });
 
-test('Infer displayName from function declaration/expression name', (t) => {
+test('Infer displayName from function declaration/expression name', t => {
   {
-    const doc = parse(`
+    const doc = parse(
+      `
       function MyComponent() { return <div />; }
-    `, displayNameHandler);
+    `,
+      displayNameHandler
+    );
 
     t.deepEqual(
       doc,
@@ -49,9 +60,12 @@ test('Infer displayName from function declaration/expression name', (t) => {
     );
   }
   {
-    const doc = parse(`
+    const doc = parse(
+      `
       var x = function MyComponent() { return <div />; }
-    `, displayNameHandler);
+    `,
+      displayNameHandler
+    );
 
     t.deepEqual(
       doc,
@@ -61,11 +75,14 @@ test('Infer displayName from function declaration/expression name', (t) => {
   }
 });
 
-test('Infer displayName from class declaration/expression name', (t) => {
+test('Infer displayName from class declaration/expression name', t => {
   {
-    const doc = parse(`
+    const doc = parse(
+      `
       class MyComponent { render() {} }
-    `, displayNameHandler);
+    `,
+      displayNameHandler
+    );
 
     t.deepEqual(
       doc,
@@ -74,9 +91,12 @@ test('Infer displayName from class declaration/expression name', (t) => {
     );
   }
   {
-    const doc = parse(`
+    const doc = parse(
+      `
       var x = class MyComponent { render() {} }
-    `, displayNameHandler);
+    `,
+      displayNameHandler
+    );
 
     t.deepEqual(
       doc,
@@ -86,10 +106,13 @@ test('Infer displayName from class declaration/expression name', (t) => {
   }
 });
 
-test('Infer displayName from variable declaration name', (t) => {
-  const doc = parse(`
+test('Infer displayName from variable declaration name', t => {
+  const doc = parse(
+    `
     var Foo = React.createClass({});
-  `, displayNameHandler);
+  `,
+    displayNameHandler
+  );
 
   t.deepEqual(
     doc,
@@ -99,22 +122,28 @@ test('Infer displayName from variable declaration name', (t) => {
 });
 
 test('Infer displayName from assignment', t => {
-  const doc = parse(`
+  const doc = parse(
+    `
     var Foo = {};
     Foo.Bar = () => <div />
-  `, displayNameHandler);
+  `,
+    displayNameHandler
+  );
 
   t.deepEqual(
     doc,
     { displayName: 'Foo.Bar' },
     'should set the displayName property on documentation.'
   );
-})
+});
 
-test('Infer displayName from file name', (t) => {
-  const doc = parse(`
+test('Infer displayName from file name', t => {
+  const doc = parse(
+    `
     module.exports = () => <div />;
-  `, createDisplayNameHandler('foo/bar/MyComponent.js'));
+  `,
+    createDisplayNameHandler('foo/bar/MyComponent.js')
+  );
 
   t.deepEqual(
     doc,
@@ -123,11 +152,14 @@ test('Infer displayName from file name', (t) => {
   );
 });
 
-test('Infer displayName from file path', (t) => {
+test('Infer displayName from file path', t => {
   {
-    const doc = parse(`
+    const doc = parse(
+      `
       module.exports = () => <div />;
-    `, createDisplayNameHandler('foo/MyComponent/index.js'));
+    `,
+      createDisplayNameHandler('foo/MyComponent/index.js')
+    );
 
     t.deepEqual(
       doc,
@@ -136,9 +168,12 @@ test('Infer displayName from file path', (t) => {
     );
   }
   {
-    const doc = parse(`
+    const doc = parse(
+      `
       module.exports = () => <div />;
-    `, createDisplayNameHandler('foo/my-component/index.js'));
+    `,
+      createDisplayNameHandler('foo/my-component/index.js')
+    );
 
     t.deepEqual(
       doc,
@@ -148,13 +183,17 @@ test('Infer displayName from file path', (t) => {
   }
 });
 
-test('Use default if displayName cannot be inferred', (t) => {
-  const doc = parse(`
+test('Use default if displayName cannot be inferred', t => {
+  const doc = parse(
+    `
     module.exports = () => <div />;
-  `, displayNameHandler);
+  `,
+    displayNameHandler
+  );
 
   t.deepEqual(
     doc,
-    { displayName: 'UnknownComponent' }, 'should use the default name'
+    { displayName: 'UnknownComponent' },
+    'should use the default name'
   );
 });
