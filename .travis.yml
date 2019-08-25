@@ -11,12 +11,19 @@ script: npm run test
 
 jobs:
   include:
+    - stage: lint
+      node_js: lts/*
+      script: npm run lint
     - stage: release
       node_js: lts/*
       script: npm run build
       deploy:
         provider: script
         skip_cleanup: true
-        script: npx semantic-release
-        on:
-          branch: master
+        script: npx semantic-release --branch master
+
+stages:
+  - name: lint
+  - name: test
+  - name: release
+    if: branch = master
