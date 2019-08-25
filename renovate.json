@@ -1,5 +1,25 @@
 {
-  "extends": [
-    "config:base"
+  "extends": ["config:base"],
+  "rangeStrategy": "replace",
+  "prCreation": "not-pending",
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "semanticCommitType": "chore",
+  "semanticCommitScope": null,
+  "packageRules": [
+    {
+      "depTypeList": ["dependencies", "peerDependencies"],
+      "semanticCommitType": "fix"
+    },
+    {
+      "depTypeList": ["peerDependencies"],
+      "rangeStrategy": "widen"
+    },
+    {
+      "depTypeList": ["devDependencies"],
+      "updateTypes": ["major", "minor"],
+      "rangeStrategy": "bump"
+    }
   ]
 }
