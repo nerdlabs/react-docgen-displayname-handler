@@ -99,7 +99,7 @@
     "flow-bin": "0.73.0",
     "react-docgen": "3.0.0-beta12",
     "rimraf": "2.6.2",
-    "semantic-release": "15.5.0",
+    "semantic-release": "15.13.24",
     "test-all-versions": "3.3.3"
   },
   "dependencies": {
