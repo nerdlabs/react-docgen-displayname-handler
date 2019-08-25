@@ -25,21 +25,14 @@
   ],
   "main": "distribution/index.js",
   "scripts": {
+    "build": "rimraf distribution/ && babel source/ --out-dir distribution/",
     "flow": "flow",
     "lint": "eslint source/",
     "fmt": "prettier --write source/*.js",
-    "build": "rimraf distribution/ && babel source/ --out-dir distribution/ --ignore **/*.spec.js",
     "pretest:unit": "npm run flow",
-    "test:unit": "ava",
-    "test": "npm run test:unit && tav"
-  },
-  "ava": {
-    "sources": [
-      "source/**/*.js"
-    ],
-    "require": [
-      "@babel/register"
-    ]
+    "test:unit": "node distribution/index.spec.js",
+    "pretest": "npm run build",
+    "test": "npm run lint && npm run test:unit && tav"
   },
   "babel": {
     "presets": [
@@ -94,8 +87,6 @@
     "@babel/plugin-syntax-flow": "7.7.4",
     "@babel/plugin-transform-flow-strip-types": "7.7.4",
     "@babel/preset-env": "7.7.6",
-    "@babel/register": "7.7.4",
-    "ava": "2.4.0",
     "babel-eslint": "10.0.3",
     "eslint": "6.7.2",
     "eslint-config-prettier": "6.7.0",
