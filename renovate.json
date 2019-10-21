@@ -20,6 +20,10 @@
       "depTypeList": ["devDependencies"],
       "updateTypes": ["major", "minor"],
       "rangeStrategy": "bump"
+    },
+    {
+      "updateTypes": ["lockFileMaintenance"],
+      "automerge": true
     }
   ]
 }
