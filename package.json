@@ -108,7 +108,7 @@
     "eslint-plugin-prettier": "3.1.1",
     "flow-bin": "0.110.0",
     "prettier": "1.19.1",
-    "react-docgen": "3.0.0-beta12",
+    "react-docgen": "3.0.0",
     "rimraf": "2.7.1",
     "test-all-versions": "3.3.3"
   },
