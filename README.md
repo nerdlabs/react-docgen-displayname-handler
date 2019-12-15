@@ -1,4 +1,4 @@
-# react-docgen-displayname-handler ![Build Status](https://img.shields.io/travis/nerdlabs/react-docgen-displayname-handler/master) ![Latest published version](https://img.shields.io/npm/v/react-docgen-displayname-handler)
+# react-docgen-displayname-handler [![Build Status](https://img.shields.io/travis/nerdlabs/react-docgen-displayname-handler/master)](https://travis-ci.org/nerdlabs/react-docgen-displayname-handler/branches) [![Latest published version](https://img.shields.io/npm/v/react-docgen-displayname-handler)](https://www.npmjs.com/package/react-docgen-displayname-handler)
 
 A handler for react-docgen that tries to infer the displayName of a component.
 
