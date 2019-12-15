@@ -26,10 +26,8 @@
   "main": "distribution/index.js",
   "scripts": {
     "build": "rimraf distribution/ && babel source/ --out-dir distribution/",
-    "flow": "flow",
     "lint": "eslint source/",
     "fmt": "prettier --write source/*.js",
-    "pretest:unit": "npm run flow",
     "test:unit": "node distribution/index.spec.js",
     "pretest": "npm run build",
     "test": "npm run lint && npm run test:unit && tav"
@@ -44,10 +42,6 @@
           }
         }
       ]
-    ],
-    "plugins": [
-      "@babel/syntax-flow",
-      "@babel/transform-flow-strip-types"
     ]
   },
   "eslintConfig": {
@@ -58,14 +52,6 @@
     "parser": "babel-eslint",
     "env": {
       "node": true
-    },
-    "globals": {
-      "ASTNode": true,
-      "Documentation": true,
-      "FlowTypeDescriptor": true,
-      "NodePath": true,
-      "PropDescriptor": true,
-      "PropTypeDescriptor": true
     },
     "rules": {
       "prettier/prettier": "error"
@@ -84,14 +70,11 @@
   "devDependencies": {
     "@babel/cli": "7.7.5",
     "@babel/core": "7.7.5",
-    "@babel/plugin-syntax-flow": "7.7.4",
-    "@babel/plugin-transform-flow-strip-types": "7.7.4",
     "@babel/preset-env": "7.7.6",
     "babel-eslint": "10.0.3",
     "eslint": "6.7.2",
     "eslint-config-prettier": "6.7.0",
     "eslint-plugin-prettier": "3.1.2",
-    "flow-bin": "0.114.0",
     "prettier": "1.19.1",
     "react-docgen": "5.0.0",
     "rimraf": "3.0.0",
