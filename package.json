@@ -91,7 +91,7 @@
     "trailingComma": "es5"
   },
   "peerDependencies": {
-    "react-docgen": "^2.17.0 || ^3.0.0-beta || ^3.0.0 || ^4.0.0  || ^5.0.0-beta"
+    "react-docgen": "^3.0.0 || ^4.0.0 || ^5.0.0-beta"
   },
   "devDependencies": {
     "ava": "0.25.0",
