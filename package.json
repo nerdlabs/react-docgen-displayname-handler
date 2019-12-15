@@ -21,89 +21,63 @@
     "node": ">=8.10.0"
   },
   "files": [
-    "distribution"
+    "source"
   ],
-  "main": "distribution/index.js",
+  "main": "source/index.js",
   "scripts": {
-    "flow": "flow",
-    "lint": "eslint source/",
+    "lint": "eslint source/*",
     "fmt": "prettier --write source/*.js",
-    "build": "rimraf distribution/ && babel source/ --out-dir distribution/ --ignore **/*.spec.js",
-    "pretest:unit": "npm run flow",
-    "test:unit": "ava",
+    "test:unit": "node source/index.spec.js",
     "test": "npm run test:unit && tav"
-  },
-  "ava": {
-    "sources": [
-      "source/**/*.js"
-    ],
-    "require": [
-      "@babel/register"
-    ]
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/env",
-        {
-          "targets": {
-            "node": "8.10.0"
-          }
-        }
-      ]
-    ],
-    "plugins": [
-      "@babel/syntax-flow",
-      "@babel/transform-flow-strip-types"
-    ]
   },
   "eslintConfig": {
     "extends": [
       "eslint:recommended",
-      "plugin:prettier/recommended"
+      "plugin:prettier/recommended",
+      "plugin:node/recommended"
     ],
-    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 2020
+    },
     "env": {
       "node": true
-    },
-    "globals": {
-      "ASTNode": true,
-      "Documentation": true,
-      "FlowTypeDescriptor": true,
-      "NodePath": true,
-      "PropDescriptor": true,
-      "PropTypeDescriptor": true
     },
     "rules": {
       "prettier/prettier": "error"
     }
   },
-  "eslintIgnore": [
-    "distribution/"
-  ],
   "prettier": {
-    "singleQuote": true,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "singleQuote": true
+  },
+  "renovate": {
+    "extends": [
+      "config:js-lib",
+      ":prNotPending",
+      ":maintainLockFilesWeekly",
+      ":automergeLinters",
+      ":automergeTesters",
+      ":automergeTypes"
+    ],
+    "packageRules": [
+      {
+        "updateTypes": [
+          "lockFileMaintenance"
+        ],
+        "automerge": true
+      }
+    ]
   },
   "peerDependencies": {
     "react-docgen": "^3.0.0 || ^4.0.0 || ^5.0.0-beta || ^5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.7.5",
-    "@babel/core": "7.7.5",
-    "@babel/plugin-syntax-flow": "7.7.4",
-    "@babel/plugin-transform-flow-strip-types": "7.7.4",
-    "@babel/preset-env": "7.7.6",
-    "@babel/register": "7.7.4",
-    "ava": "2.4.0",
-    "babel-eslint": "10.0.3",
     "eslint": "6.7.2",
     "eslint-config-prettier": "6.7.0",
+    "eslint-plugin-node": "10.0.0",
     "eslint-plugin-prettier": "3.1.2",
-    "flow-bin": "0.114.0",
     "prettier": "1.19.1",
     "react-docgen": "5.0.0",
-    "rimraf": "3.0.0",
     "test-all-versions": "4.1.1"
   },
   "dependencies": {
