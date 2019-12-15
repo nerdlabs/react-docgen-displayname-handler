@@ -34,21 +34,17 @@
     "test": "npm run test:unit && tav"
   },
   "ava": {
-    "files": [
-      "source/**/*.spec.js"
-    ],
-    "source": [
+    "sources": [
       "source/**/*.js"
     ],
     "require": [
-      "babel-register"
-    ],
-    "babel": "inherit"
+      "@babel/register"
+    ]
   },
   "babel": {
     "presets": [
       [
-        "env",
+        "@babel/env",
         {
           "targets": {
             "node": "8.10.0"
@@ -57,9 +53,8 @@
       ]
     ],
     "plugins": [
-      "syntax-flow",
-      "transform-flow-strip-types",
-      "transform-runtime"
+      "@babel/syntax-flow",
+      "@babel/transform-flow-strip-types"
     ]
   },
   "eslintConfig": {
@@ -94,23 +89,22 @@
     "react-docgen": "^3.0.0 || ^4.0.0 || ^5.0.0-beta || ^5.0.0"
   },
   "devDependencies": {
-    "ava": "0.25.0",
-    "babel-cli": "6.26.0",
+    "@babel/cli": "7.7.5",
+    "@babel/core": "7.7.5",
+    "@babel/plugin-syntax-flow": "7.7.4",
+    "@babel/plugin-transform-flow-strip-types": "7.7.4",
+    "@babel/preset-env": "7.7.6",
+    "@babel/register": "7.7.4",
+    "ava": "2.4.0",
     "babel-eslint": "10.0.3",
-    "babel-plugin-syntax-flow": "6.18.0",
-    "babel-plugin-transform-flow-strip-types": "6.22.0",
-    "babel-plugin-transform-runtime": "6.23.0",
-    "babel-preset-env": "1.7.0",
-    "babel-register": "6.26.0",
-    "babel-runtime": "6.26.0",
     "eslint": "6.7.2",
     "eslint-config-prettier": "6.7.0",
     "eslint-plugin-prettier": "3.1.2",
-    "flow-bin": "0.113.0",
+    "flow-bin": "0.114.0",
     "prettier": "1.19.1",
     "react-docgen": "5.0.0",
-    "rimraf": "2.7.1",
-    "test-all-versions": "3.3.3"
+    "rimraf": "3.0.0",
+    "test-all-versions": "4.1.1"
   },
   "dependencies": {
     "ast-types": "0.13.2"
