@@ -1,17 +1,5 @@
-node-4-5:
-  name: react-docgen
-  node: '>= 4.0.0 < 6.0.0'
-  versions: '>= 2.17.0 < 3.0.0'
-  commands: npm run test:unit
-
-node-6-7:
-  name: react-docgen
-  node: '>= 6.0.0 < 8.0.0'
-  versions: '>= 3.0.0 < 5.0.0 || >= 3.0.0-beta1 <= 3.0.0-beta12 || >= 3.0.0-rc.0 <= 3.0.0-rc.2'
-  commands: npm run test:unit
-
 node-8-x:
   name: react-docgen
-  node: '>= 8.0.0'
-  versions: '>= 3.0.0 < 5.0.0 || 5.0.0-beta.1'
+  node: '>= 8.10.0'
+  versions: '>= 3.0.0 <= 6.0.0 || 5.0.0-beta.1'
   commands: npm run test:unit
