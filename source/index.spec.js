@@ -32,7 +32,7 @@ test('Explicitly set displayName as member of React.createClass', t => {
 test('Explicitly set displayName as static class member', t => {
   const doc = parse(
     `
-    class MyComponent { static displayName = 'foo'; render() {} }
+    class MyComponent extends React.Component { static displayName = 'foo'; render() {} }
   `,
     displayNameHandler
   );
@@ -79,7 +79,7 @@ test('Infer displayName from class declaration/expression name', t => {
   {
     const doc = parse(
       `
-      class MyComponent { render() {} }
+      class MyComponent extends React.Component { render() {} }
     `,
       displayNameHandler
     );
@@ -93,7 +93,7 @@ test('Infer displayName from class declaration/expression name', t => {
   {
     const doc = parse(
       `
-      var x = class MyComponent { render() {} }
+      var x = class MyComponent extends React.Component { render() {} }
     `,
       displayNameHandler
     );
