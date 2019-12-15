@@ -21,35 +21,24 @@
     "node": ">=8.10.0"
   },
   "files": [
-    "distribution"
+    "source"
   ],
-  "main": "distribution/index.js",
+  "main": "source/index.js",
   "scripts": {
-    "build": "rimraf distribution/ && babel source/ --out-dir distribution/",
-    "lint": "eslint source/",
+    "lint": "eslint source/*",
     "fmt": "prettier --write source/*.js",
-    "test:unit": "node distribution/index.spec.js",
-    "pretest": "npm run build",
-    "test": "npm run lint && npm run test:unit && tav"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/env",
-        {
-          "targets": {
-            "node": "8.10.0"
-          }
-        }
-      ]
-    ]
+    "test:unit": "node source/index.spec.js",
+    "test": "npm run test:unit && tav"
   },
   "eslintConfig": {
     "extends": [
       "eslint:recommended",
-      "plugin:prettier/recommended"
+      "plugin:prettier/recommended",
+      "plugin:node/recommended"
     ],
-    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 2020
+    },
     "env": {
       "node": true
     },
@@ -57,27 +46,20 @@
       "prettier/prettier": "error"
     }
   },
-  "eslintIgnore": [
-    "distribution/"
-  ],
   "prettier": {
-    "singleQuote": true,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "singleQuote": true
   },
   "peerDependencies": {
     "react-docgen": "^3.0.0 || ^4.0.0 || ^5.0.0-beta || ^5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.7.5",
-    "@babel/core": "7.7.5",
-    "@babel/preset-env": "7.7.6",
-    "babel-eslint": "10.0.3",
     "eslint": "6.7.2",
     "eslint-config-prettier": "6.7.0",
+    "eslint-plugin-node": "10.0.0",
     "eslint-plugin-prettier": "3.1.2",
     "prettier": "1.19.1",
     "react-docgen": "5.0.0",
-    "rimraf": "3.0.0",
     "test-all-versions": "4.1.1"
   },
   "dependencies": {

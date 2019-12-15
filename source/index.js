@@ -1,14 +1,13 @@
 'use strict';
 
-import path from 'path';
-import { utils } from 'react-docgen';
-import { namedTypes as types } from 'ast-types';
-
+const path = require('path');
 const {
+  getMembers,
   getMemberValuePath,
   getNameOrValue,
   isExportsOrModuleAssignment,
-} = utils;
+} = require('react-docgen').utils;
+const types = require('ast-types').namedTypes;
 
 const DEFAULT_NAME = 'UnknownComponent';
 
@@ -19,15 +18,13 @@ function getNameFromPath(path) {
     case types.Literal.name:
       return getNameOrValue(path);
     case types.MemberExpression.name:
-      return utils
-        .getMembers(path)
-        .reduce(
-          (name, { path, computed }) =>
-            computed && getNameFromPath(path)
-              ? name
-              : `${name}.${getNameFromPath(path) || ''}`,
-          getNameFromPath(path.get('object'))
-        );
+      return getMembers(path).reduce(
+        (name, { path, computed }) =>
+          computed && getNameFromPath(path)
+            ? name
+            : `${name}.${getNameFromPath(path) || ''}`,
+        getNameFromPath(path.get('object'))
+      );
     default:
       return null;
   }
@@ -97,7 +94,7 @@ function getNameFromFilePath(filePath = '') {
     .replace(/-([a-z])/, (_, match) => match.toUpperCase());
 }
 
-export function createDisplayNameHandler(filePath) {
+function createDisplayNameHandler(filePath) {
   return function displayNameHandler(documentation, path) {
     let displayName = [
       getStaticDisplayName,
@@ -113,4 +110,5 @@ export function createDisplayNameHandler(filePath) {
   };
 }
 
-export default createDisplayNameHandler('');
+module.exports = exports = createDisplayNameHandler('');
+module.exports.createDisplayNameHandler = createDisplayNameHandler;

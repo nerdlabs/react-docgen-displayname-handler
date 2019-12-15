@@ -14,10 +14,8 @@ jobs:
       script: npm run lint
     - stage: release
       node_js: lts/*
-      script: npm run build
       deploy:
         provider: script
-        skip_cleanup: true
         script: npx semantic-release@15 --branch master
 
 stages:

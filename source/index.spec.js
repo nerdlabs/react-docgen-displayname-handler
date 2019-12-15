@@ -1,10 +1,12 @@
-import assert from 'assert';
-import * as docgen from 'react-docgen';
-import displayNameHandler, { createDisplayNameHandler } from './index';
+'use strict';
 
-const {
-  resolver: { findAllComponentDefinitions },
-} = docgen;
+const assert = require('assert');
+const docgen = require('react-docgen');
+const displayNameHandler = require('./index');
+
+const { createDisplayNameHandler } = displayNameHandler;
+
+const findAllComponentDefinitions = docgen.resolver.findAllComponentDefinitions;
 
 function parse(source, handler) {
   const code = `
