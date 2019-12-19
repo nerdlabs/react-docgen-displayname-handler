@@ -89,12 +89,12 @@
     "react-docgen": "^3.0.0 || ^4.0.0 || ^5.0.0-beta || ^5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.7.5",
-    "@babel/core": "7.7.5",
+    "@babel/cli": "7.7.7",
+    "@babel/core": "7.7.7",
     "@babel/plugin-syntax-flow": "7.7.4",
     "@babel/plugin-transform-flow-strip-types": "7.7.4",
-    "@babel/preset-env": "7.7.6",
-    "@babel/register": "7.7.4",
+    "@babel/preset-env": "7.7.7",
+    "@babel/register": "7.7.7",
     "ava": "2.4.0",
     "babel-eslint": "10.0.3",
     "eslint": "6.7.2",
