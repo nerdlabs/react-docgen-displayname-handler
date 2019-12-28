@@ -98,7 +98,7 @@
     "ava": "2.4.0",
     "babel-eslint": "10.0.3",
     "eslint": "6.8.0",
-    "eslint-config-prettier": "6.7.0",
+    "eslint-config-prettier": "6.9.0",
     "eslint-plugin-prettier": "3.1.2",
     "flow-bin": "0.114.0",
     "prettier": "1.19.1",
