@@ -100,7 +100,7 @@
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.0",
     "eslint-plugin-prettier": "3.1.2",
-    "flow-bin": "0.117.0",
+    "flow-bin": "0.118.0",
     "prettier": "1.19.1",
     "react-docgen": "5.1.0",
     "rimraf": "3.0.2",
