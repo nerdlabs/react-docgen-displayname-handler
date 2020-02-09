@@ -103,7 +103,7 @@
     "flow-bin": "0.117.0",
     "prettier": "1.19.1",
     "react-docgen": "5.1.0",
-    "rimraf": "3.0.1",
+    "rimraf": "3.0.2",
     "test-all-versions": "4.1.1"
   },
   "dependencies": {
