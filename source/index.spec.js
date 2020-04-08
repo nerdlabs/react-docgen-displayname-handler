@@ -14,7 +14,7 @@ function parse(source, handler) {
   return docgen.parse(code, findAllComponentDefinitions, [handler])[0];
 }
 
-test('Explicitly set displayName as member of React.createClass', t => {
+test('Explicitly set displayName as member of React.createClass', (t) => {
   const doc = parse(
     `
     var MyComponent = React.createClass({ displayName: 'foo' });
@@ -29,7 +29,7 @@ test('Explicitly set displayName as member of React.createClass', t => {
   );
 });
 
-test('Explicitly set displayName as static class member', t => {
+test('Explicitly set displayName as static class member', (t) => {
   const doc = parse(
     `
     class MyComponent extends React.Component { static displayName = 'foo'; render() {} }
@@ -44,7 +44,7 @@ test('Explicitly set displayName as static class member', t => {
   );
 });
 
-test('Infer displayName from function declaration/expression name', t => {
+test('Infer displayName from function declaration/expression name', (t) => {
   {
     const doc = parse(
       `
@@ -75,7 +75,7 @@ test('Infer displayName from function declaration/expression name', t => {
   }
 });
 
-test('Infer displayName from class declaration/expression name', t => {
+test('Infer displayName from class declaration/expression name', (t) => {
   {
     const doc = parse(
       `
@@ -106,7 +106,7 @@ test('Infer displayName from class declaration/expression name', t => {
   }
 });
 
-test('Infer displayName from variable declaration name', t => {
+test('Infer displayName from variable declaration name', (t) => {
   const doc = parse(
     `
     var Foo = React.createClass({});
@@ -121,7 +121,7 @@ test('Infer displayName from variable declaration name', t => {
   );
 });
 
-test('Infer displayName from assignment', t => {
+test('Infer displayName from assignment', (t) => {
   const doc = parse(
     `
     var Foo = {};
@@ -137,7 +137,7 @@ test('Infer displayName from assignment', t => {
   );
 });
 
-test('Infer displayName from file name', t => {
+test('Infer displayName from file name', (t) => {
   const doc = parse(
     `
     module.exports = () => <div />;
@@ -152,7 +152,7 @@ test('Infer displayName from file name', t => {
   );
 });
 
-test('Infer displayName from file path', t => {
+test('Infer displayName from file path', (t) => {
   {
     const doc = parse(
       `
@@ -183,7 +183,7 @@ test('Infer displayName from file path', t => {
   }
 });
 
-test('Use default if displayName cannot be inferred', t => {
+test('Use default if displayName cannot be inferred', (t) => {
   const doc = parse(
     `
     module.exports = () => <div />;
