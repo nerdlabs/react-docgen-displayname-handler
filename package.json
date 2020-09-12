@@ -107,6 +107,6 @@
     "test-all-versions": "4.1.1"
   },
   "dependencies": {
-    "ast-types": "0.13.3"
+    "ast-types": "0.14.2"
   }
 }
