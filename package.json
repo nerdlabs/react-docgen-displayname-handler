@@ -104,7 +104,7 @@
     "prettier": "2.2.1",
     "react-docgen": "5.3.1",
     "rimraf": "3.0.2",
-    "test-all-versions": "4.1.1"
+    "test-all-versions": "5.0.1"
   },
   "dependencies": {
     "ast-types": "0.14.2"
